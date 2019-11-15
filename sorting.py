@@ -14,7 +14,7 @@ for file in files:
 
     dirs = next(os.walk("./ATT"))[1]
 
-    testing = True if int(current_photo_num.split(".")[0]) > 5 else False
+    testing = True if int(current_photo_num.split(".")[0]) != 5 else False
     destination_folder = "test" if testing else "train"
 
     if current_person not in dirs:
@@ -31,5 +31,5 @@ dirs = next(os.walk("./ATT"))[1]
 for dir in dirs:
     test = next(os.walk("./ATT/" + dir + "/test"))[2]
     train = next(os.walk("./ATT/" + dir + "/train"))[2]
-    if len(test) != 5 or len(train) != 5:
+    if len(test) != 9 or len(train) != 1:
         print("Found not 5 elements in " + dir)
