@@ -13,7 +13,10 @@ def set_num_of_standarts(num_of_standarts):
 
     files = next(os.walk("./ATT"))[2]
 
-    shutil.rmtree("./ATT_run")
+    try:
+        shutil.rmtree("./ATT_run")
+    except FileNotFoundError:
+        pass
 
     os.makedirs("./ATT_run/test", exist_ok=True)
 
@@ -41,5 +44,5 @@ def set_num_of_standarts(num_of_standarts):
                 print("Found wrong number of elements in test")
             continue
         train = next(os.walk(f"./ATT_run/{dir}"))[2]
-        if len(train) != 1:
+        if len(train) != num_of_standarts:
             print(f"Found wrong number of elements in {dir}")
