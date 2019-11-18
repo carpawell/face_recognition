@@ -1,6 +1,5 @@
 import cv2 as cv
 import numpy as np
-import os
 
 HIST_SIZE = 256
 HIST_METHOD = "HISTCMP_CORREL"
@@ -16,6 +15,7 @@ GRADIENT_STEP = 1
 
 
 def compare_images(path_to_image_1, path_to_image_2, **kwargs):
+
     image_1 = np.float32(cv.imread(path_to_image_1, 0))
     image_2 = np.float32(cv.imread(path_to_image_2, 0))
 
@@ -33,6 +33,7 @@ def compare_images(path_to_image_1, path_to_image_2, **kwargs):
         return diff
 
     elif kwargs["method"] == "dct":
+
         dct_1 = cv.dct(image_1 / DCT_NORMALIZATION)
         dct_2 = cv.dct(image_2 / DCT_NORMALIZATION)
 
@@ -41,6 +42,7 @@ def compare_images(path_to_image_1, path_to_image_2, **kwargs):
         return 1 / diff
 
     elif kwargs["method"] == "dft":
+
         dft_1 = cv.dft(image_1 / DFT_NORMALIZATION)
         dft_2 = cv.dft(image_2 / DFT_NORMALIZATION)
 
@@ -49,6 +51,7 @@ def compare_images(path_to_image_1, path_to_image_2, **kwargs):
         return 1 / diff
 
     elif kwargs["method"] == "scale":
+
         for _ in range(NUMBERS_OF_SCALING):
             image_1 = cv.pyrDown(image_1)
             image_2 = cv.pyrDown(image_2)
@@ -58,6 +61,7 @@ def compare_images(path_to_image_1, path_to_image_2, **kwargs):
         return 1 / diff
 
     elif kwargs["method"] == "gradient":
+
         barcode_1 = get_barcode_from_image(path_to_image_1)
         barcode_2 = get_barcode_from_image(path_to_image_2)
 
@@ -75,6 +79,7 @@ def get_barcode_from_image(path):
     for i in range(0, rows, GRADIENT_STEP):
         if i + 2 * GRADIENT_WIDTH > rows:
             break
+
         result.append(
             np.linalg.norm(
                 image[i : i+GRADIENT_WIDTH] - image[i+GRADIENT_WIDTH : i+(2*GRADIENT_WIDTH)]
@@ -85,5 +90,3 @@ def get_barcode_from_image(path):
     result = map(lambda a: 0 if a < average else 1, result)
 
     return np.fromiter(result, dtype=np.int)
-
-

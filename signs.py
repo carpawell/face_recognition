@@ -1,5 +1,3 @@
-import cv2 as cv
-import numpy as np
 import os
 from utils import *
 
@@ -9,7 +7,9 @@ PATH = os.getcwd()
 def search(method):
     fail = 0
     success = 0
+
     images = next(os.walk(f"{PATH}/ATT_run/test"))[2]
+
     for image in images:
         result = []
 
@@ -36,7 +36,8 @@ def search(method):
             success += 1
         else:
             fail += 1
+
     print(f"method: {method}")
     print(f"fail: {fail}")
-    print(f"successful: {success}")
+    print(f"success: {success}")
     print(f"percentage of success: {success / (fail + success) * 100}")

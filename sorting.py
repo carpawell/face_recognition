@@ -9,28 +9,24 @@ def set_num_of_standarts(num_of_standarts):
     except StopIteration:
         pass
 
-    path = os.getcwd()
-
-    files = next(os.walk("./ATT"))[2]
-
     try:
         shutil.rmtree("./ATT_run")
     except FileNotFoundError:
         pass
 
+    path = os.getcwd()
+    files = next(os.walk("./ATT"))[2]
     os.makedirs("./ATT_run/test", exist_ok=True)
 
     for file in files:
         current_person, current_photo_num = file.split("_")
-
-        dirs = next(os.walk("./ATT"))[1]
+        persons = next(os.walk("./ATT"))[1]
 
         testing = True if int(current_photo_num.split(".")[0]) > num_of_standarts else False
         destination_folder = "test" if testing else f"{current_person}"
 
-        if current_person not in dirs:
+        if current_person not in persons:
             os.makedirs("./ATT_run/" + current_person, exist_ok=True)
-
             shutil.copyfile(f"{path}/ATT/{file}", f"{path}/ATT_run/{destination_folder}/{file}")
 
         else:
