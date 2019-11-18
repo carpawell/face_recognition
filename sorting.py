@@ -2,39 +2,44 @@ import os
 import shutil
 
 
-PATH = os.getcwd()
+def set_num_of_standarts(num_of_standarts):
+    try:
+        if len(next(os.walk("./ATT_run/1"))[2]) == num_of_standarts:
+            return
+    except StopIteration:
+        pass
 
+    path = os.getcwd()
 
-files = next(os.walk("./ATT"))[2]
-dirs = ""
-testing = False
+    files = next(os.walk("./ATT"))[2]
 
-os.makedirs("./ATT/test", exist_ok=True)
+    shutil.rmtree("./ATT_run")
 
-for file in files:
-    current_person, current_photo_num = file.split("_")
+    os.makedirs("./ATT_run/test", exist_ok=True)
 
-    dirs = next(os.walk("./ATT"))[1]
+    for file in files:
+        current_person, current_photo_num = file.split("_")
 
-    testing = True if int(current_photo_num.split(".")[0]) != 5 else False
-    destination_folder = "test" if testing else f"{current_person}"
+        dirs = next(os.walk("./ATT"))[1]
 
-    if current_person not in dirs:
-        os.makedirs("./ATT/" + current_person, exist_ok=True)
+        testing = True if int(current_photo_num.split(".")[0]) > num_of_standarts else False
+        destination_folder = "test" if testing else f"{current_person}"
 
-        shutil.move(f"{PATH}/ATT/{file}", f"{PATH}/ATT/{destination_folder}")
+        if current_person not in dirs:
+            os.makedirs("./ATT_run/" + current_person, exist_ok=True)
 
-    else:
-        shutil.move(f"{PATH}/ATT/{file}", f"{PATH}/ATT/{destination_folder}")
+            shutil.copyfile(f"{path}/ATT/{file}", f"{path}/ATT_run/{destination_folder}/{file}")
 
+        else:
+            shutil.copyfile(f"{path}/ATT/{file}", f"{path}/ATT_run/{destination_folder}/{file}")
 
-dirs = next(os.walk("./ATT"))[1]
-for dir in dirs:
-    if dir == "test":
-        if len(next(os.walk(f"./ATT/test"))[2]) != 360:
-            print(len(next(os.walk(f"./ATT/test"))[2]))
-            print("Found wrong number of elements in test")
-        continue
-    train = next(os.walk(f"./ATT/{dir}"))[2]
-    if len(train) != 1:
-        print(f"Found wrong number of elements in {dir}")
+    dirs = next(os.walk("./ATT_run"))[1]
+    for dir in dirs:
+        if dir == "test":
+            if len(next(os.walk(f"./ATT_run/test"))[2]) != (10 - num_of_standarts) * 40:
+                # print(len(next(os.walk(f"./ATT_run/test"))[2]))
+                print("Found wrong number of elements in test")
+            continue
+        train = next(os.walk(f"./ATT_run/{dir}"))[2]
+        if len(train) != 1:
+            print(f"Found wrong number of elements in {dir}")

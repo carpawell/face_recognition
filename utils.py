@@ -11,7 +11,8 @@ DFT_NORMALIZATION = 256
 
 NUMBERS_OF_SCALING = 2
 
-GRADIENT_WIDTH, GRADIENT_STEP = 1, 1
+GRADIENT_WIDTH = 1
+GRADIENT_STEP = 1
 
 
 def compare_images(path_to_image_1, path_to_image_2, **kwargs):
