@@ -5,11 +5,8 @@ from utils import *
 
 PATH = os.getcwd()
 
-HIST_SIZE = 256
-HIST_METHOD = "HISTCMP_CORREL"
 
-
-def hist():
+def search(method):
     fail = 0
     success = 0
     images = next(os.walk(f"{PATH}/ATT/test"))[2]
@@ -25,10 +22,9 @@ def hist():
             for standart in standarts:
                 result.append(
                     {
-                        "score": compare_image_hist(f"{PATH}/ATT/test/{image}",
-                                                    f"{PATH}/ATT/{person}/{standart}",
-                                                    HIST_SIZE,
-                                                    HIST_METHOD),
+                        "score": compare_images(f"{PATH}/ATT/test/{image}",
+                                                f"{PATH}/ATT/{person}/{standart}",
+                                                method=method),
                         "answer": person,
                     }
                 )
@@ -40,6 +36,7 @@ def hist():
             success += 1
         else:
             fail += 1
-
-    print(fail)
-    print(success)
+    print(f"method: {method}")
+    print(f"fail: {fail}")
+    print(f"successful: {success}")
+    print(f"percentage of success: {success / (fail + success) * 100}")
