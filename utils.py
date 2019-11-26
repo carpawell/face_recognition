@@ -1,5 +1,7 @@
 import cv2 as cv
 import numpy as np
+import matplotlib.pyplot as plt
+
 
 HIST_SIZE = 256
 HIST_METHOD = "HISTCMP_CORREL"
@@ -86,7 +88,16 @@ def get_barcode_from_image(path):
             )
         )
 
-    average = sum(result) / len(result)
-    result = map(lambda a: 0 if a < average else 1, result)
+    # average = sum(result) / len(result)
+    # result = map(lambda a: 0 if a < average else 1, result)
 
     return np.fromiter(result, dtype=np.int)
+
+# def update_line(graph, data):
+#     graph.set_xdata(np.append(graph.get_xdata(), success))
+#     graph.set_ydata(np.append(graph.get_ydata(), success / (fail + success) * 100))
+#     plt.xlabel('Number of tests')
+#     plt.ylabel('Percentage of success')
+#     plt.title('Test graph')
+#
+#     plt.draw()
