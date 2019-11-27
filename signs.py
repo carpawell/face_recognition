@@ -3,7 +3,11 @@ from utils import *
 import matplotlib.pyplot as plt
 
 PATH = os.getcwd()
+
+WAIT_TIME = 1
+
 methods = ["hist", "dft", "dct", "scale", "gradient"]
+
 
 method_weight = {
     "hist": 0.3,
@@ -66,13 +70,7 @@ def search(method, **kwargs):
 
         if kwargs.get("visualize"):
             graph.set_data(num_of_test, percentage)
-            # test.relim()
-            # test.autoscale_view()
-            # fig.canvas.draw()
-            # plt.scatter()
-            # plt.draw()
-            plt.pause(0.01)
-            # plt.show()
+            plt.pause(WAIT_TIME)
 
     print(f"method: {method}")
     print(f"fail: {fail}")
@@ -80,7 +78,7 @@ def search(method, **kwargs):
     print(f"percentage of success: {success / (fail + success) * 100}\n")
 
 
-def search_optimal(visualize):
+def search_optimal(visualize, show_images):
     fail = 0
     success = 0
     num_of_test = []
@@ -98,9 +96,23 @@ def search_optimal(visualize):
         plt.ylabel('Percentage of success')
         plt.title('Optimal method')
         plt.ion()
+        fig.canvas.manager.window.move(650, 400)
         plt.show()
 
+    if show_images:
+        cv.namedWindow("TEST IMAGE", cv.WINDOW_NORMAL)
+        cv.moveWindow("TEST IMAGE", 0, 0)
+        cv.resizeWindow("TEST IMAGE", 300, 300)
+
+        for idx, method in enumerate(methods):
+            cv.namedWindow(f"{method.upper()} ANSWER", cv.WINDOW_NORMAL)
+            cv.resizeWindow(f"{method.upper()} ANSWER", 300, 300)
+            cv.moveWindow(f"{method.upper()} ANSWER", (idx + 1) * 300 + 150, 0)
+
     for image in images:
+        if show_images:
+            test_img = cv.imread(f"{PATH}/ATT_run/test/{image}")
+            cv.imshow("TEST IMAGE", test_img)
         result = {}
 
         for method in methods:
@@ -129,6 +141,10 @@ def search_optimal(visualize):
             else:
                 result[internal_answer] += method_weight[method]
 
+            if show_images:
+                img = cv.imread(f"{PATH}/ATT/{internal_answer}_1.png")
+                cv.imshow(f"{method.upper()} ANSWER", img)
+
         answer = max(result, key=result.get)
 
         if image.split("_")[0] == answer:
@@ -141,7 +157,7 @@ def search_optimal(visualize):
 
         if visualize:
             graph.set_data(num_of_test, percentage)
-            plt.pause(0.01)
+            plt.pause(WAIT_TIME)
 
     print("Optimal method")
     print(f"fail: {fail}")
