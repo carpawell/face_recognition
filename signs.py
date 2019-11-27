@@ -8,7 +8,6 @@ WAIT_TIME = 1
 
 methods = ["hist", "dft", "dct", "scale", "gradient"]
 
-
 method_weight = {
     "hist": 0.3,
     "dft": 0.15,
