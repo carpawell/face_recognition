@@ -12,8 +12,8 @@ DFT_NORMALIZATION = 256
 
 NUMBERS_OF_SCALING = 2
 
-GRADIENT_WIDTH = 1
-GRADIENT_STEP = 1
+GRADIENT_WIDTH = 10
+GRADIENT_STEP = 10
 
 
 def compare_images(path_to_image_1, path_to_image_2, **kwargs):
@@ -92,12 +92,3 @@ def get_barcode_from_image(path):
     # result = map(lambda a: 0 if a < average else 1, result)
 
     return np.fromiter(result, dtype=np.int)
-
-# def update_line(graph, data):
-#     graph.set_xdata(np.append(graph.get_xdata(), success))
-#     graph.set_ydata(np.append(graph.get_ydata(), success / (fail + success) * 100))
-#     plt.xlabel('Number of tests')
-#     plt.ylabel('Percentage of success')
-#     plt.title('Test graph')
-#
-#     plt.draw()
