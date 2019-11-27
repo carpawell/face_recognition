@@ -2,9 +2,9 @@ import os
 import shutil
 
 
-def set_num_of_standarts(num_of_standarts):
+def set_num_of_standards(num_of_standards):
     try:
-        if len(next(os.walk("./ATT_run/1"))[2]) == num_of_standarts:
+        if len(next(os.walk("./ATT_run/1"))[2]) == num_of_standards:
             return
     except StopIteration:
         pass
@@ -22,7 +22,7 @@ def set_num_of_standarts(num_of_standarts):
         current_person, current_photo_num = file.split("_")
         persons = next(os.walk("./ATT"))[1]
 
-        testing = True if int(current_photo_num.split(".")[0]) > num_of_standarts else False
+        testing = True if int(current_photo_num.split(".")[0]) > num_of_standards else False
         destination_folder = "test" if testing else f"{current_person}"
 
         if current_person not in persons:
@@ -35,10 +35,10 @@ def set_num_of_standarts(num_of_standarts):
     dirs = next(os.walk("./ATT_run"))[1]
     for dir in dirs:
         if dir == "test":
-            if len(next(os.walk(f"./ATT_run/test"))[2]) != (10 - num_of_standarts) * 40:
+            if len(next(os.walk(f"./ATT_run/test"))[2]) != (10 - num_of_standards) * 40:
                 # print(len(next(os.walk(f"./ATT_run/test"))[2]))
                 print("Found wrong number of elements in test")
             continue
         train = next(os.walk(f"./ATT_run/{dir}"))[2]
-        if len(train) != num_of_standarts:
+        if len(train) != num_of_standards:
             print(f"Found wrong number of elements in {dir}")
