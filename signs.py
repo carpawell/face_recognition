@@ -4,11 +4,11 @@ import matplotlib.pyplot as plt
 
 PATH = os.getcwd()
 
-WAIT_TIME = 1
+WAIT_TIME = 0.001  # between image processing
 
 methods = ["hist", "dft", "dct", "scale", "gradient"]
 
-method_weight = {
+method_weight = {  # weights for LAB №4
     "hist": 0.3,
     "dft": 0.15,
     "dct": 0.15,
@@ -45,12 +45,12 @@ def search(method, **kwargs):
             if person == "test":
                 continue
 
-            standarts = next(os.walk(f"./ATT_run/{person}"))[2]
-            for standart in standarts:
+            standards = next(os.walk(f"./ATT_run/{person}"))[2]
+            for standard in standards:
                 result.append(
                     {
                         "score": compare_images(f"{PATH}/ATT_run/test/{image}",
-                                                f"{PATH}/ATT_run/{person}/{standart}",
+                                                f"{PATH}/ATT_run/{person}/{standard}",
                                                 method=method),
                         "answer": person,
                     }
@@ -93,7 +93,7 @@ def search_optimal(visualize, show_images):
         ax.set_ylim([0, 105])
         plt.xlabel('Number of tests')
         plt.ylabel('Percentage of success')
-        plt.title('Optimal method')
+        plt.title('Parallel FARES')
         plt.ion()
         fig.canvas.manager.window.move(650, 400)
         plt.show()
@@ -121,12 +121,12 @@ def search_optimal(visualize, show_images):
                 if person == "test":
                     continue
 
-                standarts = next(os.walk(f"./ATT_run/{person}"))[2]
-                for standart in standarts:
+                standards = next(os.walk(f"./ATT_run/{person}"))[2]
+                for standard in standards:
                     internal_result.append(
                         {
                             "score": compare_images(f"{PATH}/ATT_run/test/{image}",
-                                                    f"{PATH}/ATT_run/{person}/{standart}",
+                                                    f"{PATH}/ATT_run/{person}/{standard}",
                                                     method=method),
                             "answer": person,
                         }
