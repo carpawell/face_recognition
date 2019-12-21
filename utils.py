@@ -17,8 +17,8 @@ GRADIENT_STEP = 10
 
 def compare_images(path_to_image_1, path_to_image_2, **kwargs):
 
-    image_1 = np.float32(cv.imread(path_to_image_1, 0))
-    image_2 = np.float32(cv.imread(path_to_image_2, 0))
+    image_1 = np.float32(cv.resize(cv.imread(path_to_image_1, 0), (256, 192)))
+    image_2 = np.float32(cv.resize(cv.imread(path_to_image_2, 0), (256, 192)))
 
     if "method" not in kwargs:
         print("method not found")

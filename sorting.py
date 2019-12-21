@@ -35,7 +35,7 @@ def set_num_of_standards(num_of_standards):
     dirs = next(os.walk("./ATT_run"))[1]
     for dir in dirs:
         if dir == "test":
-            if len(next(os.walk(f"./ATT_run/test"))[2]) != (10 - num_of_standards) * 40:
+            if len(next(os.walk(f"./ATT_run/test"))[2]) != (10 - num_of_standards) * 12:
                 # print(len(next(os.walk(f"./ATT_run/test"))[2]))
                 print("Found wrong number of elements in test")
             continue

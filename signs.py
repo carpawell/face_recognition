@@ -4,15 +4,15 @@ import matplotlib.pyplot as plt
 
 PATH = os.getcwd()
 
-WAIT_TIME = 0.001  # between image processing
+WAIT_TIME = 0.1  # between image processing
 
-methods = ["hist", "dft", "dct", "scale", "gradient"]
+methods = ["hist", "dft", "scale"]
 
 method_weight = {  # weights for LAB №4
-    "hist": 0.3,
-    "dft": 0.15,
+    "hist": 0.333,
+    "dft": 0.333,
     "dct": 0.15,
-    "scale": 0.3,
+    "scale": 0.33,
     "gradient": 0.1
 }
 
@@ -110,7 +110,8 @@ def search_optimal(visualize, show_images):
 
     for image in images:
         if show_images:
-            test_img = cv.imread(f"{PATH}/ATT_run/test/{image}")
+            test_img = cv.imread(f"{PATH}/ATT_run/test/{image}", 0)
+            test_img = cv.resize(test_img, (256, 192))
             cv.imshow("TEST IMAGE", test_img)
         result = {}
 
@@ -141,7 +142,8 @@ def search_optimal(visualize, show_images):
                 result[internal_answer] += method_weight[method]
 
             if show_images:
-                img = cv.imread(f"{PATH}/ATT/{internal_answer}_1.png")
+                img = cv.imread(f"{PATH}/ATT/{internal_answer}_01.JPG", 0)
+                img = cv.resize(img, (256, 192))
                 cv.imshow(f"{method.upper()} ANSWER", img)
 
         answer = max(result, key=result.get)
